@@ -1,0 +1,291 @@
+{
+  "users": [
+    {
+      "id": "usr_default_rajesh",
+      "name": "Advocate Rajesh Sharma",
+      "email": "rajesh.sharma@delhibar.org",
+      "mobile": "9876543210",
+      "passwordHash": "$2a$10$7Z8V9m1wM2e8K1z5y3v7uu.kF8Z2wR4Pq3z0rK8j0v0l1b2c3d4e5",
+      "role": "Litigant / Citizen seeking legal help",
+      "barEnrollment": "D/8849/2014",
+      "isVerified": true,
+      "aadhaarToken": "•••••••• 8812",
+      "eSignPaired": true,
+      "createdAt": "2026-11-19T23:29:28.408Z"
+    },
+    {
+      "id": "usr_1795130968589",
+      "name": "Adv. Mayank Verma",
+      "email": "delivered@resend.dev",
+      "mobile": "9811223344",
+      "role": "Litigant / Citizen seeking legal help",
+      "passwordHash": "$2b$10$3Z8Cs8o3p8yTCq2P1Zigm.SHZQiF5Eonm5Wjt5qP4aiahx3NG.yJ6",
+      "isVerified": true,
+      "createdAt": "2026-11-19T23:29:28.589Z"
+    }
+  ],
+  "otps": [
+    {
+      "email": "delivered@resend.dev",
+      "mobile": "9811223344",
+      "code": "655600",
+      "expiresAt": 1795131568589
+    }
+  ],
+  "causeVault": [
+    {
+      "id": "cv_1795130969872",
+      "userId": "usr_default_rajesh",
+      "name": "Statutory Demand Notice under Section 138 Negotiable Instruments Act.pdf",
+      "category": "notices",
+      "caseNo": "NOTICE/CHEQUE/2026/246",
+      "court": "Pre-Litigation Statutory Record",
+      "date": "20 Nov 2026",
+      "size": "680 KB",
+      "hash": "SHA256: 409b09...18b34",
+      "status": "RPAD Sealed",
+      "fileUrl": "/uploads/NOTICE_CHEQUE_2026_246.pdf"
+    },
+    {
+      "id": "cv_1795130969822",
+      "userId": "usr_default_rajesh",
+      "name": "RTI Section 6(1) Application - Delhi Development Authority (DDA).pdf",
+      "category": "rti",
+      "caseNo": "RTI/DDA/2026/288",
+      "court": "Public Information Officer, Delhi Development Authority (DDA) - Land Allotment",
+      "date": "20 Nov 2026",
+      "size": "370 KB",
+      "hash": "SHA256: 338657...f3ebe",
+      "status": "Archived in Vault",
+      "fileUrl": "/uploads/RTI_DDA_2026_288.pdf"
+    },
+    {
+      "id": "cv_1",
+      "userId": "usr_default_rajesh",
+      "name": "Plaint & Statement of Truth - CS (OS) 482/2024.pdf",
+      "category": "pleadings",
+      "caseNo": "CS (OS) 482/2024 (Sharma v. Goel)",
+      "court": "Patiala House District Courts Complex",
+      "date": "12 Sep 2026",
+      "size": "2.4 MB",
+      "hash": "SHA256: 8f2a3d4e7b8c9a0123456789abcdef0123456789abcdef0123456789abcde0",
+      "status": "Certified Copy",
+      "fileUrl": "/uploads/plaint_statement_of_truth_482_2024.pdf"
+    },
+    {
+      "id": "cv_2",
+      "userId": "usr_default_rajesh",
+      "name": "Registered Vakalatnama & Bar Endorsement.pdf",
+      "category": "vakalatnama",
+      "caseNo": "CS (OS) 482/2024 (Sharma v. Goel)",
+      "court": "Patiala House District Courts Complex",
+      "date": "14 Sep 2026",
+      "size": "840 KB",
+      "hash": "SHA256: 19bc01928374650123456789abcdef0123456789abcdef0123456789abcde1",
+      "status": "e-Signed",
+      "fileUrl": "/uploads/registered_vakalatnama.pdf"
+    },
+    {
+      "id": "cv_3",
+      "userId": "usr_default_rajesh",
+      "name": "Judicial Order Sheet - Injunction Hearing.pdf",
+      "category": "orders",
+      "caseNo": "CS (OS) 482/2024 (Sharma v. Goel)",
+      "court": "Court Room 14, PHC New Delhi",
+      "date": "28 Sep 2026",
+      "size": "1.1 MB",
+      "hash": "SHA256: 4fa9928374650123456789abcdef0123456789abcdef0123456789abcdef02",
+      "status": "Certified Order",
+      "fileUrl": "/uploads/judicial_order_sheet_injunction.pdf"
+    },
+    {
+      "id": "cv_4",
+      "userId": "usr_default_rajesh",
+      "name": "Statutory Notice under Section 80 CPC.pdf",
+      "category": "notices",
+      "caseNo": "Pre-Litigation Record",
+      "court": "Registry of Delhi Development Authority",
+      "date": "02 Aug 2026",
+      "size": "620 KB",
+      "hash": "SHA256: ee81928374650123456789abcdef0123456789abcdef0123456789abcdef03",
+      "status": "RPAD Delivered",
+      "fileUrl": "/uploads/section_80_cpc_notice.pdf"
+    },
+    {
+      "id": "cv_5",
+      "userId": "usr_default_rajesh",
+      "name": "RTI Section 6(1) Application & Fee Receipt.pdf",
+      "category": "rti",
+      "caseNo": "RTI/MCD/2026/081",
+      "court": "Public Information Officer, MCD South",
+      "date": "15 Aug 2026",
+      "size": "410 KB",
+      "hash": "SHA256: 77a0198374650123456789abcdef0123456789abcdef0123456789abcdef04",
+      "status": "Under Review",
+      "fileUrl": "/uploads/rti_section_6_1_mcd.pdf"
+    }
+  ],
+  "savedCourts": [
+    {
+      "id": 1,
+      "userId": "usr_default_rajesh",
+      "name": "Patiala House District Courts Complex",
+      "hindiName": "पटियाला हाउस जिला अदालत",
+      "jurisdiction": "New Delhi District (South & New Delhi)",
+      "distance": "2.4 km from your geo-location",
+      "address": "India Gate Circle, Purana Quila Road, New Delhi - 110001",
+      "activeCases": 2,
+      "nextHearing": "Tomorrow • 10:30 AM (Court Room 14)",
+      "judge": "Sh. Vikramajit Sen, DHJS (Commercial Court 02)",
+      "phone": "011-2338-6622",
+      "image": "/images/patiala_house_court.jpg"
+    },
+    {
+      "id": 2,
+      "userId": "usr_default_rajesh",
+      "name": "High Court of Delhi",
+      "hindiName": "दिल्ली उच्च न्यायालय",
+      "jurisdiction": "Appellate & Original Jurisdiction, NCT of Delhi",
+      "distance": "3.8 km from your geo-location",
+      "address": "Sher Shah Road, New Delhi - 110503",
+      "activeCases": 1,
+      "nextHearing": "18 Oct 2026 • 11:15 AM (Court 04)",
+      "judge": "Hon'ble Mr. Justice Manmohan & Justice Mini Pushkarna",
+      "phone": "011-2338-4101",
+      "image": "/images/delhi_high_court.jpg"
+    },
+    {
+      "id": 3,
+      "userId": "usr_default_rajesh",
+      "name": "Tis Hazari District Courts Complex",
+      "hindiName": "तीस हजारी जिला अदालत",
+      "jurisdiction": "Central & West Districts",
+      "distance": "6.1 km from your geo-location",
+      "address": "Mori Gate, Central Delhi - 110054",
+      "activeCases": 0,
+      "nextHearing": "No active dockets scheduled",
+      "judge": "Ld. Principal District & Sessions Judge",
+      "phone": "011-2395-0041",
+      "image": "/images/tis_hazari_court.jpg"
+    }
+  ],
+  "dockets": [
+    {
+      "id": "doc_1",
+      "cnr": "DLND01-004821-2024",
+      "caseNo": "CS (OS) 482/2024",
+      "parties": "Sharma v. Goel & Ors.",
+      "cause": "Civil Suit for Specific Performance",
+      "court": "Patiala House Courts",
+      "courtRoom": "Court Room 14",
+      "stage": "Cross-Examination of PW-1",
+      "nextDate": "Tomorrow, 10:30 AM",
+      "isUrgent": true,
+      "actionUrl": "/dossier",
+      "actionLabel": "View Dossier"
+    },
+    {
+      "id": "doc_2",
+      "cnr": "DLHC01-009182-2024",
+      "caseNo": "W.P.(C) 918/2024",
+      "parties": "Rajesh Sharma v. Govt of NCT Delhi",
+      "cause": "RTI Non-Compliance Writ",
+      "court": "High Court of Delhi",
+      "courtRoom": "Court Room 04",
+      "stage": "Notice Issued to State",
+      "nextDate": "18 Oct 2026, 11:15 AM",
+      "isUrgent": false,
+      "actionUrl": "/rti",
+      "actionLabel": "View RTI Draft"
+    }
+  ],
+  "rtis": [
+    {
+      "id": "RTI/DDA/2026/288",
+      "userId": "usr_default_rajesh",
+      "department": "dda",
+      "departmentName": "Delhi Development Authority (DDA) - Land Allotment",
+      "applicantName": "Adv. Rajesh Sharma",
+      "applicantAddress": "Patiala House Courts, New Delhi",
+      "bplStatus": false,
+      "questions": [
+        "Provide sanctioned layout plan for Sector 14, Dwarka."
+      ],
+      "feeDetails": "Rs. 10/- via Indian Postal Order / Court Fee Stamp",
+      "createdAt": "2026-11-19T23:29:29.822Z",
+      "status": "Application Drafted & Saved"
+    },
+    {
+      "id": "rti_1",
+      "userId": "usr_default_rajesh",
+      "department": "mcd",
+      "departmentName": "Municipal Corporation of Delhi (MCD) - Building Dept",
+      "applicantName": "Adv. Rajesh Sharma",
+      "applicantAddress": "Chamber 412, Patiala House Courts, New Delhi - 110001",
+      "bplStatus": false,
+      "questions": [
+        "Please provide certified copy of sanctioned building plan for Property No. B-14, Connaught Circus, New Delhi.",
+        "State the date and file diary number under which completion certificate was granted for said premises.",
+        "Provide certified copies of inspection notes submitted by Junior Engineer (Building) between Jan 2024 to Aug 2024."
+      ],
+      "createdAt": "2026-10-12T10:00:00.000Z",
+      "status": "Submitted"
+    }
+  ],
+  "assessments": [
+    {
+      "id": "asm_1795130972162",
+      "userId": "usr_default_rajesh",
+      "category": "property",
+      "grievance": "Landlord locked out tenant despite 11 months remaining on registered commercial lease. Security deposit of 2 lakhs withheld.",
+      "causeDate": "2026-10-15",
+      "urgency": "high",
+      "analysis": {
+        "success": true,
+        "modelUsed": "openai/gpt-oss-120b",
+        "identifiedCauses": "Illegal eviction and breach of commercial lease; recovery of possession and security deposit",
+        "applicableStatutes": [
+          "Section 108, Transfer of Property Act 1882: Lessee's right to peaceful enjoyment and protection against wrongful dispossession",
+          "Section 5, Specific Relief Act 1963: Specific performance of lease contract",
+          "Section 14, Specific Relief Act 1963: Injunction to restrain landlord from further interference"
+        ],
+        "forum": "District Court (Civil Suit for recovery of possession, specific performance and damages)",
+        "limitationPeriod": "12 Years for recovery of possession (Sec. 27 Limitation Act) / 3 Years for recovery of security deposit",
+        "interimRelief": "Temporary injunction under Order XXXIX Rule 1 CPC to restrain landlord from further dispossession and to restore possession pending trial",
+        "recommendedActions": [
+          "Step 1: Serve a formal legal notice demanding immediate restoration of possession and return of the Rs.2,00,000 security deposit with interest",
+          "Step 2: Preserve all documentary evidence – registered lease deed, rent receipts, communication with landlord, photographs of lockout, and any notice received",
+          "Step 3: File a suit for recovery of possession, specific performance of the lease, and damages in the District Court, seeking an interim injunction and claim for the withheld deposit"
+        ]
+      },
+      "createdAt": "2026-11-19T23:29:32.162Z"
+    }
+  ],
+  "legalAidApplications": [
+    {
+      "id": "aid_1795130969860",
+      "tokenNumber": "DLSA-2026-7439",
+      "userId": "usr_default_rajesh",
+      "applicantName": "Smt. Sunita Sharma",
+      "criteria": "women",
+      "authority": "New Delhi District Legal Services Authority (ND-DLSA)",
+      "office": "Front Office, Ground Floor, Patiala House Courts Complex",
+      "status": "Advocate Assigned / Front Office Token Issued",
+      "createdAt": "2026-11-19T23:29:29.860Z"
+    }
+  ],
+  "notices": [
+    {
+      "id": "NOTICE/CHEQUE/2026/246",
+      "userId": "usr_default_rajesh",
+      "noticeType": "cheque",
+      "title": "Statutory Demand Notice under Section 138 Negotiable Instruments Act",
+      "addresseeName": "M/s Global Enterprises",
+      "amount": "₹ 4,50,000/-",
+      "details": "Cheque 102938 dishonoured due to insufficient funds",
+      "senderName": "Advocate Rajesh Sharma",
+      "createdAt": "2026-11-19T23:29:29.872Z",
+      "status": "Generated & Dispatched via RPAD"
+    }
+  ]
+}

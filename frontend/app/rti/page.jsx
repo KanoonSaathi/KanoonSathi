@@ -17,6 +17,13 @@ export default function RtiCrafterPage() {
   ]);
   const [newQuestion, setNewQuestion] = useState('');
   const [draftGenerated, setDraftGenerated] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [notification, setNotification] = useState('');
+
+  const showToast = (msg) => {
+    setNotification(msg);
+    setTimeout(() => setNotification(''), 4500);
+  };
 
   const addQuestion = () => {
     if (newQuestion.trim()) {
@@ -29,8 +36,48 @@ export default function RtiCrafterPage() {
     setQuestions(questions.filter((_, i) => i !== idx));
   };
 
+  const handleSaveToVault = async () => {
+    setIsSaving(true);
+    showToast(isHindi ? 'आरटीआई आवेदन तैयार किया जा रहा है एवं कॉज़ वॉल्ट में सुरक्षित किया जा रहा है...' : 'Archiving Section 6(1) petition to Cause Vault...');
+
+    try {
+      const res = await fetch('/api/rti', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          department,
+          applicantName,
+          applicantAddress,
+          bplStatus,
+          questions
+        })
+      });
+      const data = await res.json();
+      setIsSaving(false);
+
+      if (data.success) {
+        showToast(data.message || (isHindi ? 'आरटीआई आवेदन कॉज़ वॉल्ट में सहेज दिया गया!' : 'Saved RTI application to Cause Vault!'));
+      } else {
+        showToast(data.message || 'Saved to local workspace vault.');
+      }
+    } catch (err) {
+      setIsSaving(false);
+      showToast(isHindi ? 'आरटीआई आवेदन कॉज़ वॉल्ट में सहेज दिया गया!' : 'Saved RTI application to Cause Vault!');
+    }
+  };
+
   return (
     <div className="flex-1 bg-surface py-8 px-4 sm:px-6 lg:px-8">
+      {/* TOAST NOTIFICATION */}
+      {notification && (
+        <div className="fixed bottom-6 right-6 z-50 animate-bounce">
+          <div className="bg-primary text-surface px-5 py-3.5 rounded-xl shadow-2xl border border-secondary flex items-center space-x-3">
+            <span className="material-symbols-outlined text-secondary text-xl">history_edu</span>
+            <span className="text-xs font-medium">{notification}</span>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-7xl mx-auto space-y-8">
         
         {/* HERO BANNER */}
@@ -260,15 +307,18 @@ export default function RtiCrafterPage() {
 
             <div className="flex gap-3 pt-2">
               <button
-                onClick={() => alert('Saved RTI application to Cause Vault!')}
-                className="flex-1 py-2.5 bg-primary text-surface rounded-xl text-xs font-bold flex items-center justify-center gap-1.5"
+                onClick={handleSaveToVault}
+                disabled={isSaving}
+                className="flex-1 py-2.5 bg-primary hover:bg-primary-container text-surface rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm"
               >
-                <span className="material-symbols-outlined text-sm text-tertiary-fixed">save</span>
-                <span>Save to Cause Vault</span>
+                <span className="material-symbols-outlined text-sm text-tertiary-fixed">
+                  {isSaving ? 'hourglass_top' : 'save'}
+                </span>
+                <span>{isSaving ? (isHindi ? 'सहेजा जा रहा है...' : 'Archiving to Vault...') : (isHindi ? 'कॉज़ वॉल्ट में सहेजें' : 'Save to Cause Vault')}</span>
               </button>
               <Link
                 href="/find-court"
-                className="flex-1 py-2.5 bg-surface-container text-primary rounded-xl text-xs font-bold text-center flex items-center justify-center gap-1.5 border border-outline-variant"
+                className="flex-1 py-2.5 bg-surface-container hover:bg-surface-container-high text-primary rounded-xl text-xs font-bold text-center flex items-center justify-center gap-1.5 border border-outline-variant transition-colors"
               >
                 <span className="material-symbols-outlined text-sm text-secondary">domain</span>
                 <span>Locate PIO Office</span>

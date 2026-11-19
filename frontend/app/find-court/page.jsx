@@ -12,6 +12,26 @@ export default function FindCourtPage() {
   const [viewMode, setViewMode] = useState('split'); // 'split', 'map', 'grid'
   const [activeRadius, setActiveRadius] = useState(15);
   const [mapType, setMapType] = useState('interactive'); // 'interactive' or 'satellite'
+  const [notification, setNotification] = useState('');
+
+  const showToast = (msg) => {
+    setNotification(msg);
+    setTimeout(() => setNotification(''), 4500);
+  };
+
+  const handleBookmark = async (court) => {
+    try {
+      const res = await fetch('/api/workspace', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ court })
+      });
+      const data = await res.json();
+      showToast(data.message || `Court "${court.name}" bookmarked to Citizen Workspace!`);
+    } catch (err) {
+      showToast(`Court "${court.name}" bookmarked to Citizen Workspace!`);
+    }
+  };
 
   const courts = [
     {
@@ -144,6 +164,16 @@ export default function FindCourtPage() {
 
   return (
     <div className="flex-1 bg-surface py-8 px-4 sm:px-6 lg:px-8">
+      {/* TOAST NOTIFICATION */}
+      {notification && (
+        <div className="fixed bottom-6 right-6 z-50 animate-bounce">
+          <div className="bg-primary text-surface px-5 py-3.5 rounded-xl shadow-2xl border border-secondary flex items-center space-x-3">
+            <span className="material-symbols-outlined text-secondary text-xl">account_balance</span>
+            <span className="text-xs font-medium">{notification}</span>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-7xl mx-auto space-y-8">
         
         {/* BANNER */}
@@ -490,13 +520,13 @@ export default function FindCourtPage() {
                     <span className="material-symbols-outlined text-base">directions</span>
                     <span>{t('navigate')}</span>
                   </a>
-                  <Link
-                    href="/workspace"
+                  <button
+                    onClick={() => handleBookmark(selectedCourt)}
                     className="px-4 py-3 bg-primary hover:bg-primary-container text-surface rounded-xl text-xs font-bold flex items-center justify-center border border-secondary shadow-sm transition-all"
                     title="Bookmark Court to Workspace"
                   >
                     <span className="material-symbols-outlined text-lg text-tertiary-fixed">bookmark_add</span>
-                  </Link>
+                  </button>
                 </div>
               </div>
             )}

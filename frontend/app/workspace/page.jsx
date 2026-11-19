@@ -1,12 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function WorkspacePage() {
   const { language, isHindi, t } = useLanguage();
   const [activeTab, setActiveTab] = useState('all');
+  const [isLoading, setIsLoading] = useState(true);
+  const [stats, setStats] = useState({
+    activeActionsCount: 3,
+    nextHearingDate: 'Tomorrow',
+    nextHearingDetails: '10:30 AM • Patiala House Court 14',
+    savedCourtsCount: 3,
+    rtiCount: 2
+  });
+  const [docketsList, setDocketsList] = useState([]);
   const [savedCourts, setSavedCourts] = useState([
     {
       id: 1,
@@ -48,6 +57,25 @@ export default function WorkspacePage() {
       image: '/images/tis_hazari_court.jpg'
     }
   ]);
+
+  useEffect(() => {
+    async function loadWorkspace() {
+      try {
+        const res = await fetch('/api/workspace');
+        const data = await res.json();
+        if (data.success) {
+          if (data.stats) setStats(data.stats);
+          if (data.savedCourts && data.savedCourts.length > 0) setSavedCourts(data.savedCourts);
+          if (data.dockets && data.dockets.length > 0) setDocketsList(data.dockets);
+        }
+      } catch (err) {
+        console.warn('Workspace sync using local state:', err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    loadWorkspace();
+  }, []);
 
   return (
     <div className="flex-1 bg-surface py-8 px-4 sm:px-6 lg:px-8">

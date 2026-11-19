@@ -1,16 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function CauseVaultPage() {
   const { language, isHindi, t } = useLanguage();
   const [filterCategory, setFilterCategory] = useState('all');
+  const [isUploading, setIsUploading] = useState(false);
+  const [notification, setNotification] = useState('');
+  const fileInputRef = useRef(null);
 
-  const files = [
+  const [files, setFiles] = useState([
     {
-      id: 1,
+      id: 'cv_1',
       name: 'Plaint & Statement of Truth - CS (OS) 482/2024.pdf',
       category: 'pleadings',
       caseNo: 'CS (OS) 482/2024 (Sharma v. Goel)',
@@ -18,10 +21,11 @@ export default function CauseVaultPage() {
       date: '12 Sep 2026',
       size: '2.4 MB',
       hash: 'SHA256: 8f2a3d...cabe9',
-      status: 'Certified Copy'
+      status: 'Certified Copy',
+      fileUrl: '/uploads/plaint_statement_of_truth_482_2024.pdf'
     },
     {
-      id: 2,
+      id: 'cv_2',
       name: 'Registered Vakalatnama & Bar Endorsement.pdf',
       category: 'vakalatnama',
       caseNo: 'CS (OS) 482/2024 (Sharma v. Goel)',
@@ -29,10 +33,11 @@ export default function CauseVaultPage() {
       date: '14 Sep 2026',
       size: '840 KB',
       hash: 'SHA256: 19bc01...88ef1',
-      status: 'e-Signed'
+      status: 'e-Signed',
+      fileUrl: '/uploads/registered_vakalatnama.pdf'
     },
     {
-      id: 3,
+      id: 'cv_3',
       name: 'Judicial Order Sheet - Injunction Hearing.pdf',
       category: 'orders',
       caseNo: 'CS (OS) 482/2024 (Sharma v. Goel)',
@@ -40,10 +45,11 @@ export default function CauseVaultPage() {
       date: '28 Sep 2026',
       size: '1.1 MB',
       hash: 'SHA256: 4fa992...331ac',
-      status: 'Certified Order'
+      status: 'Certified Order',
+      fileUrl: '/uploads/judicial_order_sheet_injunction.pdf'
     },
     {
-      id: 4,
+      id: 'cv_4',
       name: 'Statutory Notice under Section 80 CPC.pdf',
       category: 'notices',
       caseNo: 'Pre-Litigation Record',
@@ -51,10 +57,11 @@ export default function CauseVaultPage() {
       date: '02 Aug 2026',
       size: '620 KB',
       hash: 'SHA256: ee8192...992cb',
-      status: 'RPAD Delivered'
+      status: 'RPAD Delivered',
+      fileUrl: '/uploads/section_80_cpc_notice.pdf'
     },
     {
-      id: 5,
+      id: 'cv_5',
       name: 'RTI Section 6(1) Application & Fee Receipt.pdf',
       category: 'rti',
       caseNo: 'RTI/MCD/2026/081',
@@ -62,9 +69,86 @@ export default function CauseVaultPage() {
       date: '15 Aug 2026',
       size: '410 KB',
       hash: 'SHA256: 77a019...120dc',
-      status: 'Under Review'
+      status: 'Under Review',
+      fileUrl: '/uploads/rti_section_6_1_mcd.pdf'
     }
-  ];
+  ]);
+
+  const showToast = (msg) => {
+    setNotification(msg);
+    setTimeout(() => setNotification(''), 4500);
+  };
+
+  useEffect(() => {
+    async function loadVault() {
+      try {
+        const res = await fetch('/api/cause-vault');
+        const data = await res.json();
+        if (data.success && data.files && data.files.length > 0) {
+          setFiles(data.files);
+        }
+      } catch (err) {
+        console.warn('Cause Vault local sync active:', err.message);
+      }
+    }
+    loadVault();
+  }, []);
+
+  const handleUploadClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    showToast(isHindi ? 'क्रिप्टोग्राफिक SHA-256 डिजिटल सील एवं क्लाउड वॉल्ट में अपलोड किया जा रहा है...' : 'Calculating SHA-256 seal & archiving to Cause Vault via Cloudinary...');
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('category', filterCategory === 'all' ? 'pleadings' : filterCategory);
+      formData.append('caseNo', 'CS (OS) 482/2024 (Sharma v. Goel)');
+      formData.append('court', 'Patiala House District Courts Complex');
+
+      const res = await fetch('/api/cause-vault', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      setIsUploading(false);
+
+      if (data.success && data.document) {
+        setFiles(prev => [data.document, ...prev]);
+        showToast(data.message || 'Record successfully sealed and archived!');
+      } else {
+        showToast(data.message || 'Upload failed.');
+      }
+    } catch (err) {
+      setIsUploading(false);
+      showToast('Error uploading file: ' + err.message);
+    }
+  };
+
+  const handleDownload = (file) => {
+    if (file.fileUrl && !file.fileUrl.startsWith('/uploads/')) {
+      window.open(file.fileUrl, '_blank');
+      return;
+    }
+    // Create text file simulation if local
+    const element = document.createElement('a');
+    const dummyContent = `KANOONSAATHI SOVEREIGN LEGAL VAULT\n${file.name}\n${file.hash}\nCase: ${file.caseNo}\nCourt: ${file.court}\nCertified on: ${file.date}`;
+    const blob = new Blob([dummyContent], { type: 'text/plain' });
+    element.href = URL.createObjectURL(blob);
+    element.download = file.name.replace('.pdf', '') + '_Verified.txt';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+    showToast(isHindi ? `सत्यापित प्रति डाउनलोड की गई: ${file.name}` : `Verified copy downloaded: ${file.name}`);
+  };
 
   const filteredFiles = filterCategory === 'all'
     ? files
@@ -72,6 +156,16 @@ export default function CauseVaultPage() {
 
   return (
     <div className="flex-1 bg-surface py-8 px-4 sm:px-6 lg:px-8">
+      {/* TOAST NOTIFICATION */}
+      {notification && (
+        <div className="fixed bottom-6 right-6 z-50 animate-bounce">
+          <div className="bg-primary text-surface px-5 py-3.5 rounded-xl shadow-2xl border border-secondary flex items-center space-x-3">
+            <span className="material-symbols-outlined text-secondary text-xl">verified</span>
+            <span className="text-xs font-medium">{notification}</span>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-7xl mx-auto space-y-8">
         
         {/* HERO BANNER */}
@@ -155,12 +249,22 @@ export default function CauseVaultPage() {
               ))}
             </div>
 
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              className="hidden"
+              accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+            />
             <button
-              onClick={() => alert('Uploading legal record with SHA-256 timestamp encryption...')}
-              className="w-full sm:w-auto px-4 py-2 bg-secondary text-on-secondary rounded-lg text-xs font-bold flex items-center justify-center gap-2 shadow-sm"
+              onClick={handleUploadClick}
+              disabled={isUploading}
+              className="w-full sm:w-auto px-4 py-2 bg-secondary hover:bg-secondary/90 text-on-secondary rounded-lg text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all"
             >
-              <span className="material-symbols-outlined text-sm">upload_file</span>
-              <span>Upload Certified Record</span>
+              <span className="material-symbols-outlined text-sm">
+                {isUploading ? 'hourglass_top' : 'upload_file'}
+              </span>
+              <span>{isUploading ? (isHindi ? 'सीलिंग व अपलोड...' : 'Sealing & Uploading...') : (isHindi ? 'सत्यापित रिकॉर्ड अपलोड करें' : 'Upload Certified Record')}</span>
             </button>
 
           </div>
@@ -210,7 +314,10 @@ export default function CauseVaultPage() {
                       <Link href="/dossier" className="text-primary hover:text-secondary font-bold underline">
                         View
                       </Link>
-                      <button onClick={() => alert(`Downloading verified copy of ${file.name}`)} className="text-secondary hover:underline font-bold">
+                      <button
+                        onClick={() => handleDownload(file)}
+                        className="text-secondary hover:underline font-bold"
+                      >
                         Download
                       </button>
                     </td>

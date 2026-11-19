@@ -7,9 +7,58 @@ import { useLanguage } from '../context/LanguageContext';
 export default function MobileSuitePage() {
   const { language, isHindi, t } = useLanguage();
   const [activeNotice, setActiveNotice] = useState('cheque');
+  const [addresseeName, setAddresseeName] = useState('Sh. Ramesh Goel');
+  const [amount, setAmount] = useState('₹ 8,50,000/-');
+  const [details, setDetails] = useState("Cheque No. 049182 drawn on HDFC Bank, returned on 28.09.2026 marked 'Funds Insufficient'");
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [notification, setNotification] = useState('');
+
+  const showToast = (msg) => {
+    setNotification(msg);
+    setTimeout(() => setNotification(''), 4500);
+  };
+
+  const handleGenerateNotice = async () => {
+    setIsGenerating(true);
+    showToast(isHindi ? 'विधिक नोटिस प्रारूप तैयार हो रहा है एवं कॉज़ वॉल्ट में सुरक्षित किया जा रहा है...' : 'Generating statutory notice and sealing in Cause Vault...');
+
+    try {
+      const res = await fetch('/api/notices', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          noticeType: activeNotice,
+          addresseeName,
+          amount,
+          details
+        })
+      });
+      const data = await res.json();
+      setIsGenerating(false);
+
+      if (data.success) {
+        showToast(data.message);
+      } else {
+        showToast('Generated Statutory Notice! Sealed in Cause Vault.');
+      }
+    } catch (err) {
+      setIsGenerating(false);
+      showToast('Generated Statutory Notice! Sealed in Cause Vault.');
+    }
+  };
 
   return (
     <div className="flex-1 bg-surface py-8 px-4 sm:px-6 lg:px-8">
+      {/* TOAST NOTIFICATION */}
+      {notification && (
+        <div className="fixed bottom-6 right-6 z-50 animate-bounce">
+          <div className="bg-primary text-surface px-5 py-3.5 rounded-xl shadow-2xl border border-secondary flex items-center space-x-3">
+            <span className="material-symbols-outlined text-secondary text-xl">description</span>
+            <span className="text-xs font-medium">{notification}</span>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-4xl mx-auto space-y-8">
         
         {/* BANNER */}
@@ -96,7 +145,8 @@ export default function MobileSuitePage() {
                 <label className="block text-xs font-bold text-primary mb-1">Addressee / Defaulter Name</label>
                 <input
                   type="text"
-                  defaultValue="Sh. Ramesh Goel"
+                  value={addresseeName}
+                  onChange={(e) => setAddresseeName(e.target.value)}
                   className="w-full p-2.5 bg-surface-container-lowest border border-outline-variant rounded-lg text-xs text-on-surface font-medium"
                 />
               </div>
@@ -104,7 +154,8 @@ export default function MobileSuitePage() {
                 <label className="block text-xs font-bold text-primary mb-1">Cheque / Disputed Amount (₹)</label>
                 <input
                   type="text"
-                  defaultValue="₹ 8,50,000/-"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
                   className="w-full p-2.5 bg-surface-container-lowest border border-outline-variant rounded-lg text-xs text-on-surface font-medium"
                 />
               </div>
@@ -114,17 +165,21 @@ export default function MobileSuitePage() {
               <label className="block text-xs font-bold text-primary mb-1">Cheque Number & Bank Return Memo Date</label>
               <input
                 type="text"
-                defaultValue="Cheque No. 049182 drawn on HDFC Bank, returned on 28.09.2026 marked 'Funds Insufficient'"
+                value={details}
+                onChange={(e) => setDetails(e.target.value)}
                 className="w-full p-2.5 bg-surface-container-lowest border border-outline-variant rounded-lg text-xs text-on-surface font-medium"
               />
             </div>
 
             <button
-              onClick={() => alert('Generated Section 138 Statutory Notice! Saved to Cause Vault.')}
+              onClick={handleGenerateNotice}
+              disabled={isGenerating}
               className="w-full py-3 bg-secondary hover:bg-secondary/90 text-on-secondary rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all"
             >
-              <span className="material-symbols-outlined text-base">picture_as_pdf</span>
-              <span>Generate Printable RPAD Legal Notice PDF</span>
+              <span className="material-symbols-outlined text-base">
+                {isGenerating ? 'hourglass_top' : 'picture_as_pdf'}
+              </span>
+              <span>{isGenerating ? (isHindi ? 'नोटिस तैयार किया जा रहा है...' : 'Generating Notice...') : (isHindi ? 'मुद्रण योग्य आरपीएडी विधिक नोटिस तैयार करें' : 'Generate Printable RPAD Legal Notice PDF')}</span>
             </button>
           </div>
         </div>

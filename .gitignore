@@ -16,6 +16,10 @@ dist/
 .env.development.local
 .env.test.local
 .env.production.local
+*.env
+*.env.local
+frontend/.env
+frontend/.env.local
 
 # OS and Editor files
 .DS_Store
