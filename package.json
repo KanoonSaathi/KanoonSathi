@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "workspaces": [
-    "frontend"
+    "platform"
   ],
   "scripts": {
-    "dev": "npm --prefix frontend run dev",
-    "build": "npm --prefix frontend run build",
-    "start": "npm --prefix frontend run start",
-    "lint": "npm --prefix frontend run lint"
+    "dev": "npm --prefix platform run dev",
+    "build": "npm --prefix platform run build",
+    "start": "npm --prefix platform run start",
+    "lint": "npm --prefix platform run lint"
   }
 }

@@ -1,10 +1,10 @@
 {
-  "name": "kanoonsaathi-frontend",
+  "name": "kanoonsaathi-platform",
   "version": "1.0.0",
-  "description": "KanoonSaathi Sovereign Legal Aid Platform Frontend",
+  "description": "KanoonSaathi Sovereign Legal Aid Platform & Full-Stack Core",
   "main": "server.js",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
     "lint": "next build"

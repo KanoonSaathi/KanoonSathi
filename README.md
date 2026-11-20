@@ -147,7 +147,7 @@ stitch_kanoonsaathi_legal_aid_platform/
 ├── .env.example                     # Environment variables template (safe defaults)
 ├── package.json                     # Monorepo / root package.json routing commands to frontend
 ├── README.md                        # Project documentation (this file)
-└── frontend/                        # Main Next.js web application
+└── platform/                        # Main Next.js web application
     ├── AGENTS.md                    # Next.js agent build rules
     ├── index.html                   # Static HTML entry fallback
     ├── jsconfig.json                # JavaScript configuration with path alias support (@/*)
@@ -221,13 +221,13 @@ cd stitch_kanoonsaathi_legal_aid_platform
 ```
 
 ### Step 2: Install Dependencies
-Install all required packages for the frontend workspace:
+Install all required packages for the platform workspace:
 ```bash
 # From the project root:
-npm install --prefix frontend
+npm install --prefix platform
 
 # OR navigate to the frontend folder:
-cd frontend
+cd platform
 npm install
 cd ..
 ```
@@ -249,21 +249,21 @@ http://localhost:3000
 
 ## 7. Available Scripts
 
-The repository includes scripts configured at both the root level and inside `frontend/package.json`:
+The repository includes scripts configured at both the root level and inside `platform/package.json`:
 
 ### Running from Project Root
 
 | Command | Action |
 | :--- | :--- |
-| `npm run dev` | Executes `npm --prefix frontend run dev` to start the Next.js development server on `http://localhost:3000`. |
-| `npm run build` | Executes `npm --prefix frontend run build` to generate an optimized production bundle. |
-| `npm run start` | Executes `npm --prefix frontend run start` to serve the production build. |
-| `npm run lint` | Executes `npm --prefix frontend run lint` to run Next.js ESLint checks. |
+| `npm run dev` | Executes `npm --prefix platform run dev` to start the Next.js development server on `http://localhost:3000`. |
+| `npm run build` | Executes `npm --prefix platform run build` to generate an optimized production bundle. |
+| `npm run start` | Executes `npm --prefix platform run start` to serve the production build. |
+| `npm run lint` | Executes `npm --prefix platform run lint` to run Next.js ESLint checks. |
 
-### Running from `frontend/` Directory
+### Running from `platform/` Directory
 
 ```bash
-cd frontend
+cd platform
 
 npm run dev    # Starts next dev (Turbopack)
 npm run build  # Builds production Next.js application
@@ -272,9 +272,9 @@ npm run lint   # Runs ESLint checks
 ```
 
 ### Alternative: Standalone Static Server (Legacy)
-The project also includes a standalone Node.js HTTP static server in `frontend/server.js`:
+The project also includes a standalone Node.js HTTP static server in `platform/server.js`:
 ```bash
-node frontend/server.js
+node platform/server.js
 ```
 *Note: This server is intended for serving static HTML/assets and does not provide Next.js server-side features.*
 
@@ -301,9 +301,9 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
 ### Setup Instructions (When using `.env.local`):
-1. Copy `.env.example` to `frontend/.env.local`:
+1. Copy `.env.example` to `platform/.env.local`:
    ```bash
-   cp .env.example frontend/.env.local
+   cp .env.example platform/.env.local
    ```
 2. Modify variables as needed. **Never commit `.env.local` to version control.**
 
@@ -313,30 +313,30 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 ### Routing Table
 
-All routes use the Next.js App Router and are located under `frontend/app/`:
+All routes use the Next.js App Router and are located under `platform/app/`:
 
 | Route Path | Page Component | Feature Description |
 | :--- | :--- | :--- |
-| `/` | `frontend/app/page.jsx` | Sovereign Citizen Portal: Login, Citizen Signup, OTP verification, Password Reset. |
-| `/workspace` | `frontend/app/workspace/page.jsx` | Litigant Workspace: Hearing schedules, docket metrics, bookmarked court cards. |
-| `/find-court` | `frontend/app/find-court/page.jsx` | Find a Court: Proximity radar, interactive vector/satellite map, court photography, Google Maps links. |
-| `/court-process` | `frontend/app/court-process/page.jsx` | Court Process: Civil CPC & Criminal BNSS litigation stages with document checklists. |
-| `/situation-analysis` | `frontend/app/situation-analysis/page.jsx` | Legal Triage: 6 dispute categories, limitation checks, statutory section mapping. |
-| `/rti` | `frontend/app/rti/page.jsx` | RTI Crafter: Section 6(1) Form-A generator, BPL exemption, live printable canvas. |
-| `/cause-vault` | `frontend/app/cause-vault/page.jsx` | Cause Vault: Encrypted case document locker with SHA-256 integrity simulation. |
-| `/dossier` | `frontend/app/dossier/page.jsx` | Case Dossier: Chronological litigation timeline and admitted evidence exhibits. |
-| `/nalsa-locator` | `frontend/app/nalsa-locator/page.jsx` | NALSA Locator: Section 12 eligibility calculator and DLSA Front Office directory. |
-| `/legal-aid` | `frontend/app/legal-aid/page.jsx` | Pro Bono Clinics: Legal defense clinics, women's support centers, Tele-Law hotline (15100). |
-| `/verify` | `frontend/app/verify/page.jsx` | Citizen Verification: DigiLocker e-KYC and Bar Council credential status. |
-| `/mobile-suite` | `frontend/app/mobile-suite/page.jsx` | Mobile Legal Aid Suite: Quick notice generator and hearing alert summary. |
+| `/` | `platform/app/page.jsx` | Sovereign Citizen Portal: Login, Citizen Signup, OTP verification, Password Reset. |
+| `/workspace` | `platform/app/workspace/page.jsx` | Litigant Workspace: Hearing schedules, docket metrics, bookmarked court cards. |
+| `/find-court` | `platform/app/find-court/page.jsx` | Find a Court: Proximity radar, interactive vector/satellite map, court photography, Google Maps links. |
+| `/court-process` | `platform/app/court-process/page.jsx` | Court Process: Civil CPC & Criminal BNSS litigation stages with document checklists. |
+| `/situation-analysis` | `platform/app/situation-analysis/page.jsx` | Legal Triage: 6 dispute categories, limitation checks, statutory section mapping. |
+| `/rti` | `platform/app/rti/page.jsx` | RTI Crafter: Section 6(1) Form-A generator, BPL exemption, live printable canvas. |
+| `/cause-vault` | `platform/app/cause-vault/page.jsx` | Cause Vault: Encrypted case document locker with SHA-256 integrity simulation. |
+| `/dossier` | `platform/app/dossier/page.jsx` | Case Dossier: Chronological litigation timeline and admitted evidence exhibits. |
+| `/nalsa-locator` | `platform/app/nalsa-locator/page.jsx` | NALSA Locator: Section 12 eligibility calculator and DLSA Front Office directory. |
+| `/legal-aid` | `platform/app/legal-aid/page.jsx` | Pro Bono Clinics: Legal defense clinics, women's support centers, Tele-Law hotline (15100). |
+| `/verify` | `platform/app/verify/page.jsx` | Citizen Verification: DigiLocker e-KYC and Bar Council credential status. |
+| `/mobile-suite` | `platform/app/mobile-suite/page.jsx` | Mobile Legal Aid Suite: Quick notice generator and hearing alert summary. |
 
 ### Global Layout & Components
-- **Navbar (`frontend/components/Navbar.jsx`)**: Responsive navigation with constitutional brand identity, route links, free aid CTA, and the bilingual toggle button. Includes mobile hamburger drawer.
-- **Footer (`frontend/components/Footer.jsx`)**: Article 39A constitutional citation, links to tools, and national Tele-Law helpline details.
-- **LanguageContext (`frontend/context/LanguageContext.jsx`)**: Provides `language` (`'en'` or `'hi'`), `isHindi` boolean, `toggleLanguage()`, `setLanguage()`, and translation helper `t(key)`.
+- **Navbar (`platform/components/Navbar.jsx`)**: Responsive navigation with constitutional brand identity, route links, free aid CTA, and the bilingual toggle button. Includes mobile hamburger drawer.
+- **Footer (`platform/components/Footer.jsx`)**: Article 39A constitutional citation, links to tools, and national Tele-Law helpline details.
+- **LanguageContext (`platform/context/LanguageContext.jsx`)**: Provides `language` (`'en'` or `'hi'`), `isHindi` boolean, `toggleLanguage()`, `setLanguage()`, and translation helper `t(key)`.
 
 ### Design System & Styling
-- The visual style implements the tokens from [`frontend/kanoonsaathi/DESIGN.md`](file:///frontend/kanoonsaathi/DESIGN.md):
+- The visual style implements the tokens from [`platform/kanoonsaathi/DESIGN.md`](file:///platform/kanoonsaathi/DESIGN.md):
   - **Parchment Surface**: `#fef9f0` (background simulating official paper).
   - **Judicial Navy**: `#04122e` (primary brand color).
   - **Sovereign Saffron**: `#a23f00` (secondary accent color).
@@ -445,22 +445,22 @@ style(find-court): align map pins with coordinate grid
   ```
 - Alternatively, launch Next.js on an alternate port:
   ```bash
-  npm --prefix frontend run dev -- -p 3001
+  npm --prefix platform run dev -- -p 3001
   ```
 
 ### 2. Module Resolution Errors (`Can't resolve '../context/LanguageContext'`)
 **Symptom**: `Module not found` when importing `LanguageContext` from nested sub-routes.  
 **Resolution**:
-- `frontend/jsconfig.json` is configured with path aliases (`@/*`).
+- `platform/jsconfig.json` is configured with path aliases (`@/*`).
 - Always use the absolute alias import:
   ```javascript
   import { useLanguage } from '@/context/LanguageContext';
   ```
-- Or use the root-level re-export at `frontend/app/context/LanguageContext.jsx`.
+- Or use the root-level re-export at `platform/app/context/LanguageContext.jsx`.
 
 ### 3. Tailwind CSS CDN Not Applying Offline
 **Symptom**: Styles appear unformatted when operating without an active internet connection.  
-**Resolution**: The project currently loads Tailwind CSS via the official CDN script in `frontend/app/layout.jsx`. Ensure an active internet connection or compile Tailwind locally using a PostCSS build pipeline (planned for production).
+**Resolution**: The project currently loads Tailwind CSS via the official CDN script in `platform/app/layout.jsx`. Ensure an active internet connection or compile Tailwind locally using a PostCSS build pipeline (planned for production).
 
 ---
 
@@ -505,3 +505,4 @@ Before distributing or open-sourcing, add an appropriate license (e.g., [MIT Lic
 ---
 
 *Developed for equal justice under law • Article 39A, Constitution of India*
+

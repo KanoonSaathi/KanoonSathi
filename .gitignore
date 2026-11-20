@@ -20,6 +20,8 @@ dist/
 *.env.local
 frontend/.env
 frontend/.env.local
+platform/.env
+platform/.env.local
 
 # OS and Editor files
 .DS_Store
